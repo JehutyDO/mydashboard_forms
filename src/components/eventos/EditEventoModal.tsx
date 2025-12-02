@@ -44,12 +44,16 @@ export default function EditEventoModal({
     resolver: zodResolver(eventoSchema),
     defaultValues: {
       nombre: evento.nombre,
+      tipo_evento: evento.tipo_evento,
+      nombre_involucrado_1: evento.nombre_involucrado_1,
+      nombre_involucrado_2: evento.nombre_involucrado_2 || "",
       fecha: evento.fecha,
-      hora: evento.hora || "",
-      lugar: evento.lugar || "",
+      hora: evento.hora,
+      lugar: evento.lugar,
+      lugar_ceremonia: evento.lugar_ceremonia || "",
+      hora_ceremonia: evento.hora_ceremonia || "",
       descripcion: evento.descripcion || "",
       capacidad_total: evento.capacidad_total || 0,
-      tipo_evento: evento.tipo_evento,
       estado: evento.estado,
     },
   });
@@ -121,10 +125,11 @@ export default function EditEventoModal({
             {/* Nombre */}
             <div className="space-y-2">
               <Label htmlFor="nombre">
-                Nombre del Evento <span className="text-[#ff3ea5]">*</span>
+                Nombre del Evento <span className="text-[#3b82f6]">*</span>
               </Label>
               <Input
                 id="nombre"
+                placeholder="Ej: Boda Mau & X"
                 {...register("nombre")}
                 className={errors.nombre ? "border-red-500" : ""}
               />
@@ -133,83 +138,153 @@ export default function EditEventoModal({
               )}
             </div>
 
-            {/* Fecha y Hora */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="fecha">
-                  Fecha <span className="text-[#ff3ea5]">*</span>
-                </Label>
-                <Input
-                  id="fecha"
-                  type="date"
-                  {...register("fecha")}
-                  className={errors.fecha ? "border-red-500" : ""}
-                />
-                {errors.fecha && (
-                  <p className="text-sm text-red-600">{errors.fecha.message}</p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="hora">Hora</Label>
-                <Input id="hora" type="time" {...register("hora")} />
-              </div>
-            </div>
-
-            {/* Lugar */}
+            {/* Tipo de Evento */}
             <div className="space-y-2">
-              <Label htmlFor="lugar">Lugar</Label>
-              <Input id="lugar" {...register("lugar")} />
+              <Label htmlFor="tipo_evento">
+                Tipo de Evento <span className="text-[#3b82f6]">*</span>
+              </Label>
+              <Select
+                value={tipoEventoValue}
+                onValueChange={(value) =>
+                  setValue("tipo_evento", value as EventoSchemaType["tipo_evento"])
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="boda">💒 Boda</SelectItem>
+                  <SelectItem value="xv">👑 XV Años</SelectItem>
+                  <SelectItem value="cumpleaños">🎂 Cumpleaños</SelectItem>
+                  <SelectItem value="corporativo">💼 Corporativo</SelectItem>
+                  <SelectItem value="otro">🎉 Otro</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
-            {/* Tipo de Evento y Capacidad */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="tipo_evento">
-                  Tipo de Evento <span className="text-[#ff3ea5]">*</span>
-                </Label>
-                <Select
-                  value={tipoEventoValue}
-                  onValueChange={(value) =>
-                    setValue("tipo_evento", value as EventoSchemaType["tipo_evento"])
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="boda">💒 Boda</SelectItem>
-                    <SelectItem value="xv">👑 XV Años</SelectItem>
-                    <SelectItem value="cumpleaños">🎂 Cumpleaños</SelectItem>
-                    <SelectItem value="corporativo">💼 Corporativo</SelectItem>
-                    <SelectItem value="otro">🎉 Otro</SelectItem>
-                  </SelectContent>
-                </Select>
+            {/* Involucrados */}
+            <div className="space-y-4">
+              <h3 className="font-semibold text-lg text-gray-900">👥 Involucrados</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="nombre_involucrado_1">
+                    Primer Involucrado <span className="text-[#3b82f6]">*</span>
+                  </Label>
+                  <Input
+                    id="nombre_involucrado_1"
+                    placeholder="Novio / Quinceañera / Cumpleañero"
+                    {...register("nombre_involucrado_1")}
+                    className={errors.nombre_involucrado_1 ? "border-red-500" : ""}
+                  />
+                  {errors.nombre_involucrado_1 && (
+                    <p className="text-sm text-red-600">{errors.nombre_involucrado_1.message}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="nombre_involucrado_2">
+                    Segundo Involucrado (opcional)
+                  </Label>
+                  <Input
+                    id="nombre_involucrado_2"
+                    placeholder="Novia / Socio / etc."
+                    {...register("nombre_involucrado_2")}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Fiesta Principal */}
+            <div className="space-y-4">
+              <h3 className="font-semibold text-lg text-gray-900">🎉 Fiesta Principal</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="fecha">
+                    Fecha <span className="text-[#3b82f6]">*</span>
+                  </Label>
+                  <Input
+                    id="fecha"
+                    type="date"
+                    {...register("fecha")}
+                    className={errors.fecha ? "border-red-500" : ""}
+                  />
+                  {errors.fecha && (
+                    <p className="text-sm text-red-600">{errors.fecha.message}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="hora">
+                    Hora <span className="text-[#3b82f6]">*</span>
+                  </Label>
+                  <Input 
+                    id="hora" 
+                    type="time" 
+                    {...register("hora")}
+                    className={errors.hora ? "border-red-500" : ""}
+                  />
+                  {errors.hora && (
+                    <p className="text-sm text-red-600">{errors.hora.message}</p>
+                  )}
+                </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="capacidad_total">
-                  Capacidad <span className="text-[#ff3ea5]">*</span>
+                <Label htmlFor="lugar">
+                  Lugar <span className="text-[#3b82f6]">*</span>
                 </Label>
-                <Input
-                  id="capacidad_total"
-                  type="number"
-                  min="1"
-                  {...register("capacidad_total", { valueAsNumber: true })}
-                  className={errors.capacidad_total ? "border-red-500" : ""}
+                <Input 
+                  id="lugar" 
+                  placeholder="Lugar de la fiesta"
+                  {...register("lugar")}
+                  className={errors.lugar ? "border-red-500" : ""}
                 />
-                {errors.capacidad_total && (
-                  <p className="text-sm text-red-600">
-                    {errors.capacidad_total.message}
-                  </p>
+                {errors.lugar && (
+                  <p className="text-sm text-red-600">{errors.lugar.message}</p>
                 )}
               </div>
+            </div>
+
+            {/* Ceremonia (Opcional) */}
+            <div className="space-y-4 border-t pt-4">
+              <h3 className="font-semibold text-lg text-gray-900">⛪ Ceremonia (Opcional)</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="lugar_ceremonia">Lugar Ceremonia</Label>
+                  <Input
+                    id="lugar_ceremonia"
+                    placeholder="Iglesia / Salón"
+                    {...register("lugar_ceremonia")}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="hora_ceremonia">Hora Ceremonia</Label>
+                  <Input id="hora_ceremonia" type="time" {...register("hora_ceremonia")} />
+                </div>
+              </div>
+            </div>
+
+            {/* Capacidad */}
+            <div className="space-y-2">
+              <Label htmlFor="capacidad_total">
+                Capacidad Total
+              </Label>
+              <Input
+                id="capacidad_total"
+                type="number"
+                min="1"
+                placeholder="Número de invitados"
+                {...register("capacidad_total", { valueAsNumber: true })}
+              />
             </div>
 
             {/* Estado */}
             <div className="space-y-2">
               <Label htmlFor="estado">
-                Estado <span className="text-[#ff3ea5]">*</span>
+                Estado <span className="text-[#3b82f6]">*</span>
               </Label>
               <Select
                 value={estadoValue}
@@ -233,6 +308,7 @@ export default function EditEventoModal({
               <Label htmlFor="descripcion">Descripción</Label>
               <Textarea
                 id="descripcion"
+                placeholder="Detalles adicionales del evento..."
                 rows={3}
                 {...register("descripcion")}
               />

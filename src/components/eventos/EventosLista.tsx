@@ -542,9 +542,18 @@ function EventoCard({ evento, onEdit, onDelete, isDeleting, viewMode }: EventoCa
               <div className="flex-1 min-w-0 space-y-4">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-xl text-gray-900 mb-3 line-clamp-1">
+                    <h3 className="font-bold text-xl text-gray-900 mb-2 line-clamp-1">
                       {evento.nombre}
                     </h3>
+                    {/* Involucrados */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-sm font-medium text-gray-700">
+                        👥 {evento.nombre_involucrado_1}
+                        {evento.nombre_involucrado_2 && (
+                          <span className="text-gray-500"> & {evento.nombre_involucrado_2}</span>
+                        )}
+                      </span>
+                    </div>
                     <div className="flex items-center gap-3">
                       <span className="text-3xl">{tipoConfig.emoji}</span>
                       <span className="text-sm font-semibold text-gray-600">{tipoConfig.label}</span>
@@ -639,9 +648,18 @@ function EventoCard({ evento, onEdit, onDelete, isDeleting, viewMode }: EventoCa
         <CardHeader className="pb-4 pt-6 px-6 bg-linear-to-br from-white to-gray-50/50">
           <div className="flex justify-between items-start gap-3 mb-3">
             <div className="flex-1 min-w-0">
-              <h3 className="font-bold text-xl text-gray-900 mb-3 leading-tight line-clamp-2">
+              <h3 className="font-bold text-xl text-gray-900 mb-2 leading-tight line-clamp-2">
                 {evento.nombre}
               </h3>
+              {/* Involucrados */}
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-sm font-medium text-gray-700 line-clamp-1">
+                  👥 {evento.nombre_involucrado_1}
+                  {evento.nombre_involucrado_2 && (
+                    <span className="text-gray-500"> & {evento.nombre_involucrado_2}</span>
+                  )}
+                </span>
+              </div>
               <div className="flex items-center gap-2.5">
                 <span className="text-3xl">{tipoConfig.emoji}</span>
                 <span className="text-sm font-semibold text-gray-600">{tipoConfig.label}</span>
