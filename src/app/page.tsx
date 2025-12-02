@@ -1,0 +1,125 @@
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Calendar, Users, MapPin, Clock } from "lucide-react";
+
+export default function HomePage() {
+  return (
+    <main className="min-h-screen bg-linear-to-br from-pink-50 via-white to-purple-50">
+      {/* Hero Section */}
+      <div className="container mx-auto px-4 py-20">
+        <div className="text-center max-w-4xl mx-auto space-y-8">
+          {/* Logo/Title */}
+          <div className="space-y-4">
+            <h1 className="text-6xl font-bold text-gradient">
+              Aelityx Eventos
+            </h1>
+            <p className="text-2xl text-gray-600">
+              Sistema de Gestión de Eventos Premium
+            </p>
+          </div>
+
+          {/* Description */}
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Crea y gestiona eventos inolvidables con nuestra plataforma profesional.
+            Desde bodas hasta eventos corporativos, todo en un solo lugar.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+            <Link href="/eventos/nuevo">
+              <Button size="lg" className="h-14 px-8 text-lg w-full sm:w-auto">
+                <Calendar className="mr-2 h-5 w-5" />
+                Crear Nuevo Evento
+              </Button>
+            </Link>
+            <Link href="/eventos">
+              <Button
+                size="lg"
+                variant="outline"
+                className="h-14 px-8 text-lg w-full sm:w-auto border-2 border-[#ff3ea5] text-[#ff3ea5] hover:bg-[#ff3ea5] hover:text-white"
+              >
+                <Users className="mr-2 h-5 w-5" />
+                Ver Todos los Eventos
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-20">
+          <FeatureCard
+            icon={<Calendar className="h-8 w-8 text-[#ff3ea5]" />}
+            title="Gestión Completa"
+            description="Administra todos los detalles de tus eventos en un solo lugar"
+          />
+          <FeatureCard
+            icon={<Users className="h-8 w-8 text-[#ff3ea5]" />}
+            title="Control de Asistentes"
+            description="Gestiona la capacidad y lista de invitados fácilmente"
+          />
+          <FeatureCard
+            icon={<MapPin className="h-8 w-8 text-[#ff3ea5]" />}
+            title="Múltiples Ubicaciones"
+            description="Organiza eventos en diferentes lugares sin complicaciones"
+          />
+          <FeatureCard
+            icon={<Clock className="h-8 w-8 text-[#ff3ea5]" />}
+            title="Programación Flexible"
+            description="Planifica eventos con fechas y horarios personalizados"
+          />
+        </div>
+
+        {/* Stats Section */}
+        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <StatCard number="500+" label="Eventos Creados" />
+          <StatCard number="50K+" label="Invitados Gestionados" />
+          <StatCard number="99%" label="Satisfacción" />
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t border-gray-200 mt-20">
+        <div className="container mx-auto px-4 py-8 text-center text-gray-600">
+          <p>© 2025 Aelityx Eventos. Todos los derechos reservados.</p>
+          <p className="mt-2 text-sm">
+            Powered by <span className="text-[#ff3ea5] font-semibold">Pixeles</span>
+          </p>
+        </div>
+      </footer>
+    </main>
+  );
+}
+
+interface FeatureCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+function FeatureCard({ icon, title, description }: FeatureCardProps) {
+  return (
+    <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+      <div className="flex flex-col items-center text-center space-y-4">
+        <div className="p-3 bg-pink-50 rounded-lg">
+          {icon}
+        </div>
+        <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
+        <p className="text-gray-600">{description}</p>
+      </div>
+    </div>
+  );
+}
+
+interface StatCardProps {
+  number: string;
+  label: string;
+}
+
+function StatCard({ number, label }: StatCardProps) {
+  return (
+    <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+      <p className="text-4xl font-bold text-gradient">{number}</p>
+      <p className="text-gray-600 mt-2">{label}</p>
+    </div>
+  );
+}
