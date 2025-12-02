@@ -115,8 +115,8 @@ Configuración:
 
 ### 9. Variables de Entorno
 ```env
-✅ NEXT_PUBLIC_API_URL="https://pixeles.aelityx.com/api"
-✅ NEXT_PUBLIC_API_TOKEN="aelityx_pixeles_2025_secret"
+✅ NEXT_PUBLIC_API_URL="https://tu-dominio.com/api"
+✅ NEXT_PUBLIC_API_TOKEN="tu_token_secreto_aqui"
 ```
 
 ### 10. Dependencias Instaladas
@@ -186,14 +186,14 @@ npm run dev
 
 ### Endpoint configurado:
 ```
-POST https://pixeles.aelityx.com/api/eventos.php
+POST https://tu-dominio.com/api/eventos.php
 ```
 
 ### Headers automáticos:
 ```javascript
 {
   "Content-Type": "application/json",
-  "Authorization": "Bearer aelityx_pixeles_2025_secret"
+  "Authorization": "Bearer tu_token_secreto_aqui"
 }
 ```
 

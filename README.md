@@ -68,11 +68,11 @@ aelityx-eventos-form/
 
 ### 1. Variables de Entorno
 
-El archivo `.env.local` ya está creado con:
+El archivo `.env.local` debe ser creado con tus credenciales:
 
 ```env
-NEXT_PUBLIC_API_URL="https://pixeles.aelityx.com/api"
-NEXT_PUBLIC_API_TOKEN="aelityx_pixeles_2025_secret"
+NEXT_PUBLIC_API_URL="https://tu-dominio.com/api"
+NEXT_PUBLIC_API_TOKEN="tu_token_secreto_aqui"
 ```
 
 ### 2. Instalación de Dependencias

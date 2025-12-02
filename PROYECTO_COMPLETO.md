@@ -184,15 +184,15 @@ aelityx-eventos-form/
 
 ### Configurado
 ```
-URL:    https://pixeles.aelityx.com/api
-Token:  aelityx_pixeles_2025_secret
+URL:    https://tu-dominio.com/api
+Token:  tu_token_secreto_aqui
 ```
 
 ### Headers Automáticos
 ```json
 {
   "Content-Type": "application/json",
-  "Authorization": "Bearer aelityx_pixeles_2025_secret"
+  "Authorization": "Bearer tu_token_secreto_aqui"
 }
 ```
 

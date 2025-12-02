@@ -147,8 +147,8 @@ public/                                     ✅ Assets públicos
 
 ### 1. .env.local
 ```env
-NEXT_PUBLIC_API_URL="https://pixeles.aelityx.com/api"
-NEXT_PUBLIC_API_TOKEN="aelityx_pixeles_2025_secret"
+NEXT_PUBLIC_API_URL="https://tu-dominio.com/api"
+NEXT_PUBLIC_API_TOKEN="tu_token_secreto_aqui"
 ```
 **Propósito:** Variables de entorno para API
 
