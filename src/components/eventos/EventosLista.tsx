@@ -522,8 +522,12 @@ interface EventoCardProps {
 }
 
 function EventoCard({ evento, onEdit, onDelete, isDeleting, viewMode }: EventoCardProps) {
-  const estadoConfig = ESTADO_CONFIG[evento.estado];
-  const tipoConfig = TIPO_EVENTO_CONFIG[evento.tipo_evento];
+  // Normalizar el estado a minúsculas para evitar problemas con la BD
+  const estadoNormalizado = evento.estado?.toLowerCase() as 'borrador' | 'activo' | 'finalizado';
+  const tipoNormalizado = evento.tipo_evento?.toLowerCase() as 'boda' | 'xv' | 'cumpleaños' | 'corporativo' | 'otro';
+  
+  const estadoConfig = ESTADO_CONFIG[estadoNormalizado] || ESTADO_CONFIG.borrador;
+  const tipoConfig = TIPO_EVENTO_CONFIG[tipoNormalizado] || TIPO_EVENTO_CONFIG.otro;
   const EstadoIcon = estadoConfig.icon;
 
   if (viewMode === "list") {
@@ -546,14 +550,16 @@ function EventoCard({ evento, onEdit, onDelete, isDeleting, viewMode }: EventoCa
                       {evento.nombre}
                     </h3>
                     {/* Involucrados */}
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-sm font-medium text-gray-700">
-                        👥 {evento.nombre_involucrado_1}
-                        {evento.nombre_involucrado_2 && (
-                          <span className="text-gray-500"> & {evento.nombre_involucrado_2}</span>
-                        )}
-                      </span>
-                    </div>
+                    {evento.nombre_involucrado_1 && (
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="text-sm font-medium text-gray-700">
+                          👥 {evento.nombre_involucrado_1}
+                          {evento.nombre_involucrado_2 && (
+                            <span className="text-gray-500"> & {evento.nombre_involucrado_2}</span>
+                          )}
+                        </span>
+                      </div>
+                    )}
                     <div className="flex items-center gap-3">
                       <span className="text-3xl">{tipoConfig.emoji}</span>
                       <span className="text-sm font-semibold text-gray-600">{tipoConfig.label}</span>
@@ -652,14 +658,16 @@ function EventoCard({ evento, onEdit, onDelete, isDeleting, viewMode }: EventoCa
                 {evento.nombre}
               </h3>
               {/* Involucrados */}
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-sm font-medium text-gray-700 line-clamp-1">
-                  👥 {evento.nombre_involucrado_1}
-                  {evento.nombre_involucrado_2 && (
-                    <span className="text-gray-500"> & {evento.nombre_involucrado_2}</span>
-                  )}
-                </span>
-              </div>
+              {evento.nombre_involucrado_1 && (
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-sm font-medium text-gray-700 line-clamp-1">
+                    👥 {evento.nombre_involucrado_1}
+                    {evento.nombre_involucrado_2 && (
+                      <span className="text-gray-500"> & {evento.nombre_involucrado_2}</span>
+                    )}
+                  </span>
+                </div>
+              )}
               <div className="flex items-center gap-2.5">
                 <span className="text-3xl">{tipoConfig.emoji}</span>
                 <span className="text-sm font-semibold text-gray-600">{tipoConfig.label}</span>
